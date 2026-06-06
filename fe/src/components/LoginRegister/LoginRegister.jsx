@@ -17,28 +17,6 @@ export default function LoginRegister({ setCurrentUser }) {
     occupation: "",
   });
 
-  // const handleLogin = async () => {
-  //   try {
-  //     const res = await axios.post(
-  //       `${BASE_URL}/admin/login`,
-  //       {
-  //         login_name,
-  //         password,
-  //       },
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     );
-
-  //     setCurrentUser(res.data);
-  //     localStorage.setItem("currentUser", JSON.stringify(res.data));
-  //   } catch (err) {
-  //     alert(
-  //       "Login failed: " + (err.response?.data?.message || "Unknown error")
-  //     );
-  //   }
-  // };
-
   const handleLogin = async () => {
     const fakeUser = {
       _id: "123",
