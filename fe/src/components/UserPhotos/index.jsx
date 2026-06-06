@@ -1,94 +1,52 @@
 import React, { useState, useEffect } from "react";
-
-import {
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  Box,
-} from "@material-ui/core";
-
 import { useParams, Link } from "react-router-dom";
-
 import fetchModel, { BASE_URL } from "../../lib/fetchModelData";
 
 function UserPhotos() {
   const { userId } = useParams();
-
   const [photos, setPhotos] = useState(null);
 
-  const fetchPhotos = async () => {
-    try {
-      const data = await fetchModel(`/photosOfUser/${userId}`);
-      setPhotos(data);
-    } catch {
-      setPhotos([]);
-    }
-  };
-
   useEffect(() => {
-    fetchPhotos();
+    fetchModel(`/photosOfUser/${userId}`)
+      .then((data) => setPhotos(data))
+      .catch(() => setPhotos([]));
   }, [userId]);
 
-  if (photos === null) {
-    return <Typography>Loading...</Typography>;
-  }
+  if (photos === null) return <div>Loading...</div>;
+  if (photos.length === 0) return <div>No photos.</div>;
 
-  if (photos.length === 0) {
-    return <Typography>No photos.</Typography>;
-  }
-
-  const renderPhoto = (photo) => (
-    <Card key={photo._id} style={{ marginBottom: 30 }}>
-      <CardMedia
-        component="img"
-        image={`${BASE_URL}/images/${photo.file_name}`}
-        alt="photo"
-        style={{
-          maxHeight: 500,
-          objectFit: "contain",
-        }}
-      />
-
-      <CardContent>
-        <Typography variant="body2" color="textSecondary">
-          Posted: {photo.date_time}
-        </Typography>
-
-        <Typography variant="subtitle1" style={{ marginTop: 10 }}>
-          Comments:
-        </Typography>
-
-        {photo.comments?.length > 0 ? (
-          photo.comments.map((c) => (
-            <Box key={c._id} my={1}>
-              <Typography
-                variant="body2"
-                color="primary"
-                component={Link}
-                to={`/users/${c.user._id}`}
-                style={{
-                  textDecoration: "none",
-                  fontWeight: "bold",
-                }}
-              >
-                {c.user.first_name} {c.user.last_name}:
-              </Typography>
-
-              <Typography variant="body2" component="span">
-                {" "}
-                {c.comment}
-              </Typography>
-            </Box>
-          ))
-        ) : (
-          <Typography>No comments.</Typography>
-        )}
-      </CardContent>
-    </Card>
+  return (
+    <div>
+      {photos.map((photo) => (
+        <div key={photo._id}>
+          <img src={`${BASE_URL}/images/${photo.file_name}`} alt="photo" />
+          <p>Posted: {photo.date_time}</p>
+          <h4>Comments:</h4>
+          {photo.comments?.length > 0 ? (
+            <ul style={{ listStyleType: "none", padding: 0 }}>
+              {photo.comments.map((c) => (
+                <li key={c._id}>
+                  <Link
+                    to={`/users/${c.user._id}`}
+                    style={{
+                      fontWeight: "bold",
+                      textDecoration: "none",
+                      color: "blue",
+                    }}
+                  >
+                    {c.user.first_name} {c.user.last_name}:
+                  </Link>
+                  {" " + c.comment}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No comments.</p>
+          )}
+        </div>
+      ))}
+    </div>
   );
-
-  return <div>{photos.map(renderPhoto)}</div>;
 }
 
 export default UserPhotos;

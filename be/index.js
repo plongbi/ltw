@@ -22,20 +22,20 @@ app.use(express.json());
 
 app.set("trust proxy", 1);
 app.use("/images", express.static(path.join(__dirname, "images")));
-// app.use(
-//   session({
-//     secret: "photo-sharing-secret-key",
-//     resave: false,
-//     saveUninitialized: false,
-//     proxy: true,
-//     cookie: {
-//       secure: true,
-//       sameSite: "none",
-//       httpOnly: true,
-//       maxAge: 2 * 60 * 60 * 1000,
-//     },
-//   })
-// );
+app.use(
+  session({
+    secret: "photo-sharing-secret-key",
+    resave: false,
+    saveUninitialized: false,
+    proxy: true,
+    cookie: {
+      secure: true,
+      sameSite: "none",
+      httpOnly: true,
+      maxAge: 2 * 60 * 60 * 1000,
+    },
+  })
+);
 
 app.get("/", (req, res) => {
   res.json({
@@ -43,11 +43,11 @@ app.get("/", (req, res) => {
   });
 });
 
-// app.get("/test-session", (req, res) => {
-//   res.json({
-//     sessionUser: req.session.user_id || null,
-//   });
-// });
+app.get("/test-session", (req, res) => {
+  res.json({
+    sessionUser: req.session.user_id || null,
+  });
+});
 
 // User
 app.get("/user/list", async (req, res) => {

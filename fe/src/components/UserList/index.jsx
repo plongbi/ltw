@@ -1,11 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  Divider,
-} from "@material-ui/core";
 import { Link } from "react-router-dom";
 import fetchModel from "../../lib/fetchModelData";
 
@@ -14,25 +7,25 @@ function UserList() {
 
   useEffect(() => {
     fetchModel("/user/list")
-      .then((data) => {
-        setUsers(data); 
-      })
-      .catch((err) => console.error("Lỗi khi lấy danh sách user:", err));
-  }, []); 
+      .then((data) => setUsers(data))
+      .catch((err) => console.error("Lỗi:", err));
+  }, []);
 
   return (
     <div>
-      <Typography variant="h6">User List</Typography>
-      <List component="nav">
+      <h2>User List</h2>
+      <ul style={{ listStyleType: "none", padding: 0 }}>
         {users.map((user) => (
-          <React.Fragment key={user._id}>
-            <ListItem button component={Link} to={`/users/${user._id}`}>
-              <ListItemText primary={`${user.first_name} ${user.last_name}`} />
-            </ListItem>
-            <Divider />
-          </React.Fragment>
+          <li key={user._id}>
+            <Link
+              to={`/users/${user._id}`}
+              style={{ textDecoration: "none", color: "blue" }}
+            >
+              {user.first_name} {user.last_name}
+            </Link>
+          </li>
         ))}
-      </List>
+      </ul>
     </div>
   );
 }

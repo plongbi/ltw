@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Box } from "@material-ui/core";
 import { useParams, Link } from "react-router-dom";
 import fetchModel from "../../lib/fetchModelData";
 
@@ -8,42 +7,33 @@ function UserDetail() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Gọi API lấy thông tin chi tiết user
     fetchModel(`/user/${userId}`)
-      .then((data) => {
-        setUser(data);
-      })
-      .catch((err) => console.error("Lỗi khi lấy chi tiết user:", err));
+      .then((data) => setUser(data))
+      .catch((err) => console.error("Lỗi:", err));
   }, [userId]);
 
-  if (!user) return <Typography>Loading...</Typography>;
+  if (!user) return <div>Loading...</div>;
 
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
+    <div>
+      <h2>
         {user.first_name} {user.last_name}
-      </Typography>
-      <Typography variant="body1">
-        <strong>Location:</strong> {user.location}
-      </Typography>
-      <Typography variant="body1">
-        <strong>Description:</strong> {user.description}
-      </Typography>
-      <Typography variant="body1">
-        <strong>Occupation:</strong> {user.occupation}
-      </Typography>
+      </h2>
 
-      <Box mt={3}>
-        <Button
-          variant="contained"
-          // color="primary"
-          component={Link}
-          to={`/photos/${user._id}`}
-        >
-          View Photos
-        </Button>
-      </Box>
-    </Box>
+      <p>
+        <strong>Location:</strong> {user.location}
+      </p>
+      <p>
+        <strong>Description:</strong> {user.description}
+      </p>
+      <p>
+        <strong>Occupation:</strong> {user.occupation}
+      </p>
+
+      <Link to={`/photos/${user._id}`} style={{ textDecoration: "none" }}>
+        View Photos
+      </Link>
+    </div>
   );
 }
 
