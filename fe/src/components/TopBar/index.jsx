@@ -57,9 +57,6 @@ function TopBar({ currentUser, setCurrentUser }) {
 
           <Typography variant="h6">{contextText}</Typography>
 
-          {/* UPLOAD */}
-          <Button style={{ color: "white" }}>Add photo</Button>
-
           {/* LOGOUT */}
           {/* <Button style={{ color: "red" }} onClick={handleLogout}>
             Logout
