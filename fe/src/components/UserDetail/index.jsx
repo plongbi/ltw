@@ -14,7 +14,7 @@ function UserDetail() {
         setUser(data);
       })
       .catch((err) => console.error("Lỗi khi lấy chi tiết user:", err));
-  }, [userId]); 
+  }, [userId]);
 
   if (!user) return <Typography>Loading...</Typography>;
 
@@ -36,7 +36,7 @@ function UserDetail() {
       <Box mt={3}>
         <Button
           variant="contained"
-          color="primary"
+          // color="primary"
           component={Link}
           to={`/photos/${user._id}`}
         >

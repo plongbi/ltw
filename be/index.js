@@ -22,20 +22,20 @@ app.use(express.json());
 
 app.set("trust proxy", 1);
 app.use("/images", express.static(path.join(__dirname, "images")));
-app.use(
-  session({
-    secret: "photo-sharing-secret-key",
-    resave: false,
-    saveUninitialized: false,
-    proxy: true,
-    cookie: {
-      secure: true,
-      sameSite: "none",
-      httpOnly: true,
-      maxAge: 2 * 60 * 60 * 1000,
-    },
-  })
-);
+// app.use(
+//   session({
+//     secret: "photo-sharing-secret-key",
+//     resave: false,
+//     saveUninitialized: false,
+//     proxy: true,
+//     cookie: {
+//       secure: true,
+//       sameSite: "none",
+//       httpOnly: true,
+//       maxAge: 2 * 60 * 60 * 1000,
+//     },
+//   })
+// );
 
 app.get("/", (req, res) => {
   res.json({
@@ -43,11 +43,11 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/test-session", (req, res) => {
-  res.json({
-    sessionUser: req.session.user_id || null,
-  });
-});
+// app.get("/test-session", (req, res) => {
+//   res.json({
+//     sessionUser: req.session.user_id || null,
+//   });
+// });
 
 // User
 app.get("/user/list", async (req, res) => {
@@ -111,86 +111,51 @@ app.get("/photosOfUser/:id", async (req, res) => {
 });
 
 // Login
-app.post("/admin/login", async (req, res) => {
-  try {
-    const { login_name, password } = req.body;
-
-    const user = await User.findOne({
-      login_name,
-    });
-
-    if (!user || user.password !== password) {
-      return res.status(400).json({
-        message: "Invalid login",
-      });
-    }
-
-    req.session.user_id = user._id;
-
-    req.session.save((err) => {
-      if (err) {
-        return res.status(500).json({
-          message: "Session save failed",
-        });
-      }
-
-      res.json({
-        _id: user._id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        login_name: user.login_name,
-      });
-    });
-  } catch (err) {
-    res.status(500).json({
-      message: err.message,
-    });
-  }
-});
-
-// Logout
-app.post("/admin/logout", (req, res) => {
-  req.session.destroy(() => {
-    res.clearCookie("connect.sid");
-    res.json({
-      message: "Logged out",
-    });
-  });
-});
-
-// Add comment
-// app.post("/commentsOfPhoto/:photo_id", async (req, res) => {
-//   if (!req.session.user_id) {
-//     return res.status(401).json({
-//       message: "Unauthorized",
-//     });
-//   }
-
+// app.post("/admin/login", async (req, res) => {
 //   try {
-//     const photo = await Photo.findById(req.params.photo_id);
+//     const { login_name, password } = req.body;
 
-//     if (!photo) {
-//       return res.status(404).json({
-//         message: "Photo not found",
+//     const user = await User.findOne({
+//       login_name,
+//     });
+
+//     if (!user || user.password !== password) {
+//       return res.status(400).json({
+//         message: "Invalid login",
 //       });
 //     }
 
-//     photo.comments.push({
-//       comment: req.body.comment,
-//       user_id: req.session.user_id,
-//       date_time: new Date(),
-//     });
+//     req.session.user_id = user._id;
 
-//     await photo.save();
+//     req.session.save((err) => {
+//       if (err) {
+//         return res.status(500).json({
+//           message: "Session save failed",
+//         });
+//       }
 
-//     res.json({
-//       message: "Comment added",
+//       res.json({
+//         _id: user._id,
+//         first_name: user.first_name,
+//         last_name: user.last_name,
+//         login_name: user.login_name,
+//       });
 //     });
 //   } catch (err) {
 //     res.status(500).json({
 //       message: err.message,
 //     });
 //   }
+// });
+
+// Logout
+// app.post("/admin/logout", (req, res) => {
+//   req.session.destroy(() => {
+//     res.clearCookie("connect.sid");
+//     res.json({
+//       message: "Logged out",
+//     });
+//   });
 // });
 
 app.listen(8081, () => {

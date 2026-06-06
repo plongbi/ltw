@@ -14,25 +14,25 @@ import UserPhotos from "./components/UserPhotos";
 import LoginRegister from "./components/LoginRegister/LoginRegister";
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("currentUser"))
-  );
+  // const [currentUser, setCurrentUser] = useState(
+  //   JSON.parse(localStorage.getItem("currentUser"))
+  // );
 
-  // Not login
-  if (!currentUser) {
-    return (
-      <Router>
-        <LoginRegister setCurrentUser={setCurrentUser} />
-      </Router>
-    );
-  }
+  // if (!currentUser) {
+  //   return (
+  //     <Router>
+  //       <LoginRegister setCurrentUser={setCurrentUser} />
+  //     </Router>
+  //   );
+  // }
 
   return (
     <Router>
       <div>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TopBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
+            {/* <TopBar currentUser={currentUser} setCurrentUser={setCurrentUser} /> */}
+            <TopBar />
           </Grid>
 
           <div className="main-topbar-buffer" />
@@ -47,22 +47,17 @@ const App = () => {
             <Paper className="main-grid-item">
               <Routes>
                 {/* HOME */}
-                <Route
-                  path="/"
-                  element={
-                    <Navigate to={`/users/${currentUser._id}`} replace />
-                  }
-                />
+                <Route path="/" element={<Navigate to="/users" replace />} />
 
                 <Route path="/users/:userId" element={<UserDetail />} />
 
                 {/* USER PHOTOS */}
                 <Route path="/photos/:userId" element={<UserPhotos />} />
 
-                <Route
-                  path="*"
-                  element={<Navigate to={`/users/${currentUser._id}`} />}
-                />
+                {/* USER LISTS */}
+                <Route path="/users" element={<UserList />} />
+
+                <Route path="*" element={<Navigate to="/users" />} />
               </Routes>
             </Paper>
           </Grid>

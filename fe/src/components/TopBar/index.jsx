@@ -1,14 +1,11 @@
 import React from "react";
-
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
-
 import { useLocation } from "react-router-dom";
-import { BASE_URL } from "../../lib/fetchModelData";
-import axios from "axios";
+// import { BASE_URL } from "../../lib/fetchModelData"; // Có thể comment nếu không dùng
+// import axios from "axios"; // Có thể comment nếu không dùng
 
 function TopBar({ currentUser, setCurrentUser }) {
   const location = useLocation();
-
   const path = location.pathname;
 
   let contextText = "Welcome to Photo App";
@@ -19,23 +16,21 @@ function TopBar({ currentUser, setCurrentUser }) {
     contextText = "User Photos";
   }
 
-  // Logout
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        `${BASE_URL}/admin/logout`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-
-      setCurrentUser(null);
-      localStorage.removeItem("currentUser");
-    } catch (err) {
-      alert("Logout failed");
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     await axios.post(
+  //       `${BASE_URL}/admin/logout`,
+  //       {},
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     setCurrentUser(null);
+  //     localStorage.removeItem("currentUser");
+  //   } catch (err) {
+  //     alert("Logout failed");
+  //   }
+  // };
 
   return (
     <AppBar position="static" className="topbar-appBar">
@@ -58,7 +53,7 @@ function TopBar({ currentUser, setCurrentUser }) {
           }}
         >
           {/* USER */}
-          <Typography variant="h6">Hi {currentUser?.first_name} </Typography>
+          {/* <Typography variant="h6">Hi {currentUser?.first_name} </Typography> */}
 
           <Typography variant="h6">{contextText}</Typography>
 
@@ -66,9 +61,9 @@ function TopBar({ currentUser, setCurrentUser }) {
           <Button style={{ color: "white" }}>Add photo</Button>
 
           {/* LOGOUT */}
-          <Button style={{ color: "red" }} onClick={handleLogout}>
+          {/* <Button style={{ color: "red" }} onClick={handleLogout}>
             Logout
-          </Button>
+          </Button> */}
         </div>
       </Toolbar>
     </AppBar>

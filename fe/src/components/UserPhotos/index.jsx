@@ -17,8 +17,6 @@ function UserPhotos() {
 
   const [photos, setPhotos] = useState(null);
 
-  // const [comment, setComment] = useState("");
-
   const fetchPhotos = async () => {
     try {
       const data = await fetchModel(`/photosOfUser/${userId}`);
@@ -31,29 +29,6 @@ function UserPhotos() {
   useEffect(() => {
     fetchPhotos();
   }, [userId]);
-
-  /*
-  const handleComment = async (photoId) => {
-    if (!comment.trim()) {
-      return alert("Comment cannot be empty");
-    }
-
-    try {
-      await axios.post(
-        `${BASE_URL}/commentsOfPhoto/${photoId}`,
-        { comment },
-        {
-          withCredentials: true,
-        }
-      );
-
-      setComment("");
-      fetchPhotos();
-    } catch {
-      alert("Add comment failed");
-    }
-  };
-  */
 
   if (photos === null) {
     return <Typography>Loading...</Typography>;
@@ -109,26 +84,6 @@ function UserPhotos() {
         ) : (
           <Typography>No comments.</Typography>
         )}
-
-        {/*
-        <Box mt={3}>
-          <TextField
-            fullWidth
-            label="Add Comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-
-          <Button
-            style={{ marginTop: 10 }}
-            variant="contained"
-            color="primary"
-            onClick={() => handleComment(photo._id)}
-          >
-            Add Comment
-          </Button>
-        </Box>
-        */}
       </CardContent>
     </Card>
   );

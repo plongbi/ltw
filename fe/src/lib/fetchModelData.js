@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://lsd48f-8081.csb.app";
+export const BASE_URL = "https://l3lhht-8081.csb.app";
 
 async function fetchModelData(url, method = "GET", data = null) {
   try {
