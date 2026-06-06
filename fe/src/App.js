@@ -14,16 +14,12 @@ import UserPhotos from "./components/UserPhotos";
 import LoginRegister from "./components/LoginRegister/LoginRegister";
 
 const App = () => {
-  // const [currentUser, setCurrentUser] = useState(
-  //   JSON.parse(localStorage.getItem("currentUser"))
-  // );
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("currentUser"))
+  );
 
   // if (!currentUser) {
-  //   return (
-  //     <Router>
-  //       <LoginRegister setCurrentUser={setCurrentUser} />
-  //     </Router>
-  //   );
+  //   return <LoginRegister setCurrentUser={setCurrentUser} />;
   // }
 
   return (
@@ -31,8 +27,7 @@ const App = () => {
       <div>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            {/* <TopBar currentUser={currentUser} setCurrentUser={setCurrentUser} /> */}
-            <TopBar />
+            <TopBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
           </Grid>
 
           <div className="main-topbar-buffer" />

@@ -17,26 +17,39 @@ export default function LoginRegister({ setCurrentUser }) {
     occupation: "",
   });
 
-  const handleLogin = async () => {
-    try {
-      const res = await axios.post(
-        `${BASE_URL}/admin/login`,
-        {
-          login_name,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+  // const handleLogin = async () => {
+  //   try {
+  //     const res = await axios.post(
+  //       `${BASE_URL}/admin/login`,
+  //       {
+  //         login_name,
+  //         password,
+  //       },
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
 
-      setCurrentUser(res.data);
-      localStorage.setItem("currentUser", JSON.stringify(res.data));
-    } catch (err) {
-      alert(
-        "Login failed: " + (err.response?.data?.message || "Unknown error")
-      );
-    }
+  //     setCurrentUser(res.data);
+  //     localStorage.setItem("currentUser", JSON.stringify(res.data));
+  //   } catch (err) {
+  //     alert(
+  //       "Login failed: " + (err.response?.data?.message || "Unknown error")
+  //     );
+  //   }
+  // };
+
+  const handleLogin = async () => {
+    // Bỏ qua axios, gán dữ liệu giả
+    const fakeUser = {
+      _id: "123",
+      first_name: "Phạm Hải Long",
+      last_name: "",
+    };
+
+    setCurrentUser(fakeUser);
+    localStorage.setItem("currentUser", JSON.stringify(fakeUser));
+    // React Router sẽ tự động điều hướng nếu bạn để logic kiểm tra currentUser ở App.js
   };
 
   const handleRegister = () => {

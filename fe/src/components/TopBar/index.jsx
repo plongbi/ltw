@@ -16,6 +16,12 @@ function TopBar({ currentUser, setCurrentUser }) {
     contextText = "User Photos";
   }
 
+  // const handleLogout = () => {
+  //   setCurrentUser(null);
+
+  //   localStorage.removeItem("currentUser");
+  // };
+
   // const handleLogout = async () => {
   //   try {
   //     await axios.post(
