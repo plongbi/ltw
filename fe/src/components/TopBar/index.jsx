@@ -22,22 +22,6 @@ function TopBar({ currentUser, setCurrentUser }) {
   //   localStorage.removeItem("currentUser");
   // };
 
-  // const handleLogout = async () => {
-  //   try {
-  //     await axios.post(
-  //       `${BASE_URL}/admin/logout`,
-  //       {},
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     setCurrentUser(null);
-  //     localStorage.removeItem("currentUser");
-  //   } catch (err) {
-  //     alert("Logout failed");
-  //   }
-  // };
-
   return (
     <AppBar position="static" className="topbar-appBar">
       <Toolbar
